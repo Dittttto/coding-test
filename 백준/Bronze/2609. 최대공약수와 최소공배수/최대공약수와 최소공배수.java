@@ -1,52 +1,24 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
+import java.util.*;
+import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer srt = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(srt.nextToken());
-        int M = Integer.parseInt(srt.nextToken());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer srt = new StringTokenizer(reader.readLine());
+        int a = Integer.parseInt(srt.nextToken());
+        int b = Integer.parseInt(srt.nextToken());
+        int gcd = getGcd(a,b);
+        int lcm = (a * b )/ gcd;
 
-        int mcd = getMCD(N, M);
-        int mcm = getMCM(mcd, N, M);
-        System.out.println(mcd);
-        System.out.println(mcm);
-    }
-    static int getMCM(int mcd, int number1, int number2) {
-        return (number1 * number2) / mcd;
-    }
-    static int getMCD(int number1, int number2){
-        int mcd = -1;
-        ArrayList divisorsA = getDivisor(number1);
-        ArrayList divisorsB = getDivisor(number2);
+        System.out.println(gcd);
+        System.out.println(lcm);
 
-        for(int itemA: (ArrayList<Integer>)divisorsA) {
-            for(int itemB: (ArrayList<Integer>)divisorsB) {
-                if(itemA == itemB) {
-                    if(itemA > mcd) {
-                        mcd = itemA;
-                    }
-                }
-            }
+    }
+
+    static int getGcd(int a, int b){
+        if(b == 0) {
+            return a;
         }
 
-        return mcd;
-    }
-
-    static ArrayList getDivisor(int number) {
-        ArrayList result = new ArrayList();
-
-        for (int i = 1; i <= (int)number/2 ; i++) {
-            if(number % i == 0) {
-                result.add(i);
-            }
-        }
-        result.add(number);
-
-        return result;
+        return getGcd(b, a%b);
     }
 }
