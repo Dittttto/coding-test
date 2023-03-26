@@ -17,37 +17,25 @@ public class Main {
         for (int i = 0; i < N; i++) {
             for (int j = 1; j < N; j++) {
                 if(!map[i][j-1].equals(map[i][j])) {
-                    String temp = map[i][j-1];
-                    map[i][j-1] = map[i][j];
-                    map[i][j] = temp;
-                    int cntRow = searchRow(map);
-                    int cntColumn = searchColumn(map);
-                    int tempCnt = Math.max(cntRow, cntColumn);
+                    swap(map, i, j-1, i, j);
+                    int cnt = search(map);
 
-                    if(totalCnt < tempCnt) {
-                        totalCnt = tempCnt;
+                    if(totalCnt < cnt) {
+                        totalCnt = cnt;
                     }
 
-                    temp = map[i][j-1];
-                    map[i][j-1] = map[i][j];
-                    map[i][j] = temp;
+                    swap(map, i, j-1, i, j);
                 }
 
                 if(!map[j-1][i].equals(map[j][i])) {
-                    String temp = map[j-1][i];
-                    map[j-1][i] = map[j][i];
-                    map[j][i] = temp;
-                    int cntRow = searchRow(map);
-                    int cntColumn = searchColumn(map);
-                    int tempCnt = Math.max(cntRow, cntColumn);
+                    swap(map, j-1, i, j, i);
 
-                    if(totalCnt < tempCnt) {
-                        totalCnt = tempCnt;
+                    int cnt = search(map);
+
+                    if(totalCnt < cnt) {
+                        totalCnt = cnt;
                     }
-
-                    temp = map[j-1][i];
-                    map[j-1][i] = map[j][i];
-                    map[j][i] = temp;
+                    swap(map, j-1, i, j, i);
                 }
             }
         }
@@ -55,47 +43,44 @@ public class Main {
         System.out.println(totalCnt);
     }
 
-    static int searchRow(String[][] arr) {
+    static void swap(String[][] arr, int i1, int j1, int i2, int j2) {
+        String temp = arr[i1][j1];
+        arr[i1][j1] = arr[i2][j2];
+        arr[i2][j2] = temp;
+    }
+    static int search(String[][] arr) {
         int cnt = 0;
         for (int i = 0; i < arr.length; i++) {
-            int temp = 1;
+            int temp = 0;
+            int rowTemp = 1;
+            int columnTemp = 1;
             for (int j = 1; j < arr.length; j++) {
                 if(arr[i][j-1].equals(arr[i][j])) {
-                    temp++;
+                    rowTemp++;
                 }else {
-                    if(cnt < temp) {
-                        cnt = temp;
+                    if(cnt < rowTemp) {
+                        cnt = rowTemp;
                     }
 
-                    temp = 1;
+                    rowTemp = 1;
                 }
-            }
-            if(temp > cnt) {
-                cnt = temp;
-            }
-        }
-        return cnt;
-    }
-    static int searchColumn(String[][] arr) {
-        int cnt = 0;
-        for (int i = 0; i < arr.length; i++) {
-            int temp = 1;
-            for (int j = 1; j < arr.length; j++) {
+
                 if(arr[j-1][i].equals(arr[j][i])) {
-                    temp++;
+                    columnTemp++;
                 }else {
-                    if(cnt < temp) {
-                        cnt = temp;
+                    if(cnt < columnTemp) {
+                        cnt = columnTemp;
                     }
 
-                    temp = 1;
+                    columnTemp = 1;
                 }
             }
+
+            temp = Math.max(rowTemp, columnTemp);
             if(temp > cnt) {
                 cnt = temp;
             }
         }
-
         return cnt;
     }
 }
