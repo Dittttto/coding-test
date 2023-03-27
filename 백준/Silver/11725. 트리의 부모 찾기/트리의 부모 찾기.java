@@ -1,11 +1,10 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer srt;
         int T = Integer.parseInt(reader.readLine());
         ArrayList<LinkedList<Integer>> map = new ArrayList<>();
@@ -25,25 +24,26 @@ public class Main {
 
         bfs(map, visited, parent);
         for (int i = 2; i < parent.length; i++) {
-            System.out.println(parent[i]);
+            writer.write(parent[i] + "\n");
         }
+
+        writer.flush();
+        writer.close();
     }
     
     public static void bfs(ArrayList<LinkedList<Integer>> map, boolean[] visited, int[] parent){
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(1);
 
-        while(!queue.isEmpty()) {
+       while(!queue.isEmpty()) {
             int cur = queue.poll();
-            while(!map.get(cur).isEmpty()) {
-                LinkedList<Integer> curArr = map.get(cur);
-                if(curArr.size() > 0) {
-                    int num = curArr.pollFirst();
-                    if(!visited[num]) {
-                        queue.offer(num);
-                        visited[num] = true;
-                        parent[num] = cur;
-                    }
+            LinkedList<Integer> curArr = map.get(cur);
+            while(curArr.size() > 0) {
+                int num = curArr.pollFirst();
+                if(!visited[num]) {
+                    queue.offer(num);
+                    visited[num] = true;
+                    parent[num] = cur;
                 }
             }
         }
