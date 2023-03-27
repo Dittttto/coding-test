@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -25,24 +22,25 @@ public class Main {
             map.get(A).offerLast(B);
             map.get(B).offerLast(A);
         }
-        dfs(map, visited, parent);
+
+        bfs(map, visited, parent);
         for (int i = 2; i < parent.length; i++) {
             System.out.println(parent[i]);
         }
     }
+    
+    public static void bfs(ArrayList<LinkedList<Integer>> map, boolean[] visited, int[] parent){
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(1);
 
-    public static void dfs(ArrayList<LinkedList<Integer>> map, boolean[] visited, int[] parent){
-        Stack<Integer> stack = new Stack<>();
-        stack.push(1);
-
-        while(!stack.isEmpty()) {
-            int cur = stack.pop();
+        while(!queue.isEmpty()) {
+            int cur = queue.poll();
             while(!map.get(cur).isEmpty()) {
                 LinkedList<Integer> curArr = map.get(cur);
                 if(curArr.size() > 0) {
                     int num = curArr.pollFirst();
                     if(!visited[num]) {
-                        stack.push(num);
+                        queue.offer(num);
                         visited[num] = true;
                         parent[num] = cur;
                     }
