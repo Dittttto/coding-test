@@ -1,9 +1,9 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main {
+    static BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer srt = new StringTokenizer(reader.readLine());
@@ -17,14 +17,16 @@ public class Main {
         }
 
         permutation(arr, visited, out, 0, N, M);
+        writer.flush();
+        writer.close();
     }
 
-    public static void permutation(int[] arr, boolean[] visited, int[] out, int depth, int N, int M) {
+    public static void permutation(int[] arr, boolean[] visited, int[] out, int depth, int N, int M) throws IOException {
         if (depth == M) {
             for (int a : out) {
-                System.out.print(a + " ");
+                writer.write(a + " ");
             }
-            System.out.println();
+            writer.write("\n");
             return;
         }
 
