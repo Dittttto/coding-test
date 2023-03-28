@@ -4,6 +4,8 @@ import java.io.*;
 public class Main {
     static int[] visited;
     static int depth = 1;
+    static BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer srt = new StringTokenizer(reader.readLine());
@@ -29,8 +31,11 @@ public class Main {
         sort(map);
         dfs(map, R);
         for (int i = 1; i < visited.length ; i++) {
-            System.out.println(visited[i]);
+            writer.write(visited[i] + "\n");
         }
+
+        writer.flush();
+        writer.close();
     }
 
     public static void dfs(ArrayList<LinkedList<Integer>> map, int R) {
