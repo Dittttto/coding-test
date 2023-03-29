@@ -1,27 +1,27 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
         int T = Integer.parseInt(reader.readLine());
         int[] arr = new int[T];
         int idx =0;
         for(String num: reader.readLine().split(" ")) {
             arr[idx++] = Integer.parseInt(num);
         }
-        
+
         boolean hasNext = nextPermutation(arr, T);
         if(!hasNext) {
-            System.out.println(-1);
-            return;
+            writer.write(-1 +" ");
+        }else {
+            for(long num: arr) {
+                writer.write(num + " ");
+            }
         }
-
-        for(int num: arr) {
-            System.out.print(num + " ");
-        }
-
+        
+        writer.flush();
+        writer.close();
     }
 
     public static boolean nextPermutation(int[] arr, int N) {
