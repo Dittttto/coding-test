@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 class Solution {
-    public ArrayList<Integer> solution(int n) {
+    public ArrayList<Integer> solution2(int n) {
         if(n == 1) return new ArrayList<>(Arrays.asList(1));
 
         int[][] map = new int[n][];
@@ -59,5 +59,43 @@ class Solution {
         }
         
         return answer;
+    }
+    
+    public int[] solution(int n){
+        // 0 > bottom , 1> right 2 > left top
+        int[] dx = {0,1,-1};
+        int[] dy = {1,0,-1};
+        int[][] map = new int[n][n];
+
+        int value = 1;
+        int x = 0;
+        int y = 0;
+        int dir = 0;
+        while(true){
+            map[y][x] = value++;
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+
+            if(nx == -1 || ny == -1 || nx == n || ny == n || map[ny][nx] != 0) {
+                dir = (dir + 1) % 3;
+                nx = x + dx[dir];
+                ny = y + dy[dir];
+
+                if (nx == -1 || ny == -1|| nx == n || ny == n || map[ny][nx] != 0) break;
+            }
+
+            x = nx;
+            y = ny;
+        }
+
+        int[] result = new int[value-1];
+        int idx =0;
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < i+1 ; j++) {
+                result[idx++] = map[i][j];
+            }
+        }
+        
+        return result;
     }
 }
