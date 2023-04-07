@@ -40,7 +40,7 @@ class Solution {
         return bigInteger.intValue();
     }
     
-    public int solution(String s) {
+    public int solution3(String s) {
         StringBuilder sb = new StringBuilder();
         HashMap<String, Integer> hm = new HashMap<>(){{
             put("zero", 0);
@@ -78,5 +78,18 @@ class Solution {
         }
         
         return Integer.parseInt(sb.toString());
+    }
+    
+    public int solution(String s) {
+        String[] words = {
+            "zero", "one", "two", "three", "four", "five",
+            "six", "seven", "eight", "nine", 
+        };
+
+        for (int i = 0; i < words.length; i++) {
+            s = s.replace(words[i], Integer.toString(i));
+        }
+        
+        return Integer.parseInt(s);
     }
 }
