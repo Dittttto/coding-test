@@ -46,9 +46,12 @@ private static boolean isGood(String[][] map, int x, int y){
 
                 if( ny <= -1 || ny >= map.length || nx <= -1 || nx >= map.length || map[ny][nx].equals("X")) break;
                 if(map[ny][nx].equals("P")) {
-                    return false;
+                    answer = false;
+                    break;
                 }
             }
+            if (!answer) return false;
+
         }
 
 
@@ -74,70 +77,11 @@ private static boolean isGood(String[][] map, int x, int y){
             if(ny == -1 || ny == map.length || nx == -1 || nx == map.length || map[ny][nx].equals("X")) continue;
             if(map[ny][nx].equals("P")){
                 if(y+dy2  >= 0 && y+dy2 < map.length && x+dx2 >= 0 && x+dx2 < map.length && !map[y+dy2][x+dx2].equals("X")){
-                    return false;
+                    answer = false;
+                    break;
                 }
 
                 if(y+dy3  >= 0 && y+dy3 < map.length && x+dx3 >= 0 && x+dx3 < map.length && !map[y+dy3][x+dx3].equals("X")){
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    private static boolean checkSafety(String[][] map, int x, int y) {
-        int[][] top = new int[][] {{-1,0}, {-2,0}};
-        int[][] left = new int[][] {{0,-1}, {0, -2}};
-        int[][] right = new int[][] {{0,1}, {0,2}};
-        int[][] bottom = new int[][] {{1,0},{2,0}};
-        int[] leftTop = new int[] {-1,-1 , 0, -1, -1, 0};
-        int[] rightTop = new int[] {-1,1, 0, -1, 0,1};
-        int[] leftBottom = new int[] {1,-1, 0,-1,1,0};
-        int[] rightBottom = new int[] {1,1, 1,0, 0,1};
-
-        int[][][] direct = new int[][][]{top, left, right, bottom};
-        boolean answer = true;
-        for (int[][] row: direct){
-            for (int i = 0; i < row.length; i++) {
-                int cx = x;
-                int cy = y;
-                int dx = row[i][1];
-                int dy = row[i][0];
-
-                if (cx + dx < 0 || cx + dx >= map.length) continue;
-                if (cy + dy < 0 || cy + dy >= map.length) continue;
-                if (map[cy + dy][cx + dx].equals("X")) break;
-                if (map[cy + dy][cx + dx].equals("P")) {
-                    answer = false;
-                    break;
-                }
-            }
-            
-            if(!answer) break;
-        }
-        
-        if(!answer) return answer;
-
-        int[][] direct2 = new int[][]{leftTop, rightTop, leftBottom, rightBottom};
-        for (int i = 0; i < direct2.length; i++) {
-            int cx = x;
-            int cy = y;
-            int dx = direct2[i][1];
-            int dy = direct2[i][0];
-            int y2 = direct2[i][2];
-            int x2 = direct2[i][3];
-            int y3 = direct2[i][4];
-            int x3 = direct2[i][5];
-
-            if (cx + dx < 0 || cx + dx >= map.length) continue;
-            if (cy + dy < 0 || cy + dy >= map.length) continue;
-            if (map[cy + dy][cx + dx].equals("X")) continue;
-            if (map[cy + dy][cx + dx].equals("P")) {
-                if(cy + y2 >= 0 && cy + y2 < map.length && cx + x2 >= 0 && cx + x2 < map.length && !map[cy+y2][cx+x2].equals("X")) {
-                    answer = false;
-                    break;
-                } else if(cy + y3 >= 0 && cy + y3 < map.length && cx + x3 >= 0 && cx + x3 < map.length && !map[cy+y3][cx+x3].equals("X")){
                     answer = false;
                     break;
                 }
