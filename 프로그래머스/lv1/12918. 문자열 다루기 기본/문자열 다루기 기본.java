@@ -1,5 +1,5 @@
 class Solution {
-    public boolean solution(String s) {
+    public boolean solution2(String s) {
         boolean onlyNum = true;
         boolean len = s.length() == 4 || s.length() == 6;
         for(char ch: s.toCharArray()) {
@@ -10,5 +10,9 @@ class Solution {
         }
         
         return len && onlyNum;
+    }
+    
+    public boolean solution(String s) {
+        return s.matches("[0-9]{4}|[0-9]{6}");       
     }
 }
