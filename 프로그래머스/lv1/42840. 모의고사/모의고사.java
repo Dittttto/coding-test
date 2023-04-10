@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 class Solution {
     private static final int[] PATTERN_1 = {1,2,3,4,5};
     private static final int[] PATTERN_2 = {2,1,2,3,2,4,2,5};
@@ -20,12 +22,15 @@ class Solution {
             if(maxValue < num) maxValue = num;
         }
 
-        List<Integer> result = new ArrayList<>();
-        for (int i = 0; i < score.length; i++) {
-            if(score[i] == maxValue){
-                result.add(i+1);
-            }
-        }
-        return result.stream().mapToInt(x -> x).toArray();
+        // List<Integer> result = new ArrayList<>();
+        // for (int i = 0; i < score.length; i++) {
+        //     if(score[i] == maxValue){
+        //         result.add(i+1);
+        //     }
+        // }
+        final int max = maxValue;
+
+        return IntStream.range(0, 3).filter(x -> score[x] == max).map(x -> x+1).toArray();
+
     }
 }
