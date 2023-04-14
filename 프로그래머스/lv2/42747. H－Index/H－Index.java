@@ -1,16 +1,15 @@
-import java.util.Arrays;
-
+import java.util.*;
 class Solution {
     public int solution(int[] citations) {
+        int answer = 0;
         Arrays.sort(citations);
-        for (int i = citations.length; i > 0  ; i--) {
-            if(isValid(citations, i)) return i;
+        for(int i = 0 ; i < citations.length ; i++){
+            int h = citations[i];
+            if(h >= citations.length - i) {
+                answer = citations.length - i;
+                break;
+            }
         }
-        return 0;
-    }
-    
-    private boolean isValid(int[] citations, int h){
-        int index = citations.length - h;
-        return citations[index] >= h;
+        return answer;
     }
 }
