@@ -10,20 +10,23 @@ class Solution {
                 if(idx == -1) continue;
                 
                 String tmp= textCopy.replace(word, "");
-                if(textCopy.length() - tmp.length() == word.length()){
-                        textCopy = textCopy.replace(word, "*");
+                int textLen = textCopy.length();
+                int tmpLen = tmp.length();
+                int wordLen = word.length();
+                if(textLen - tmpLen == wordLen){
+                    textCopy = textCopy.replace(word, "*");
                 }else {
-                    boolean ok = true;
-                    for(int i = 1;i < (textCopy.length() - tmp.length()) / word.length(); i++){
+                    boolean flag = true;
+                    for(int i = 1;i < (textLen - tmpLen) / wordLen; i++){
                         int step = textCopy.indexOf(word, idx+1);
-                        if(step == idx + word.length()) {
-                            ok = false;
+                        if(step == idx + wordLen) {
+                            flag = false;
                             break;
                         }
                         idx = textCopy.indexOf(word, idx+1);
                     }
                     
-                    if(ok){
+                    if(flag){
                         textCopy = textCopy.replace(word, "*");;                       
                     }
                 }
