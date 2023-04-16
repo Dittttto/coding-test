@@ -31,12 +31,10 @@ class Solution {
             int[] move = hm.get(dir);
             int copyX = x;
             int copyY = y;
-            int dx = move[0];
-            int dy = move[1];
             boolean block = false;
             while (amount > 0) {
-                copyX += dx;
-                copyY += dy;
+                copyX += move[0];
+                copyY += move[1];
                 amount--;
 
                 if (copyX < 0 || copyX>= M) {
