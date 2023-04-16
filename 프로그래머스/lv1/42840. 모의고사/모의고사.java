@@ -22,14 +22,7 @@ class Solution {
             if(maxValue < num) maxValue = num;
         }
 
-        // List<Integer> result = new ArrayList<>();
-        // for (int i = 0; i < score.length; i++) {
-        //     if(score[i] == maxValue){
-        //         result.add(i+1);
-        //     }
-        // }
         final int max = maxValue;
-
         return IntStream.range(0, 3).filter(x -> score[x] == max).map(x -> x+1).toArray();
 
     }
