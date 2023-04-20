@@ -12,13 +12,13 @@ public class Main {
     }
 
     public static long go(int n) {
-        if(n == 0) return 1;
-        if(n < 0) return 0;
-        if(dp[n] != 0) return dp[n];
+        dp[0] = 1;
+        dp[1] = 1;
 
-        long a = go(n-1);
-        long b = go(n-2);
-        dp[n] = (a+b) % 15746;
+        for (int i = 2; i <= n ; i++) {
+            dp[i] = (dp[i-1] + dp[i-2]) % 15746;
+        }
+
         return dp[n];
     }
 }
