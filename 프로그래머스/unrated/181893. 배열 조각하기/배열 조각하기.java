@@ -5,7 +5,7 @@ class Solution {
         int len = arr.length;
         for(int i = 0; i< query.length; i++) {
             if(i%2 == 0) {
-            if(query[i] > end) continue;
+            // if(query[i] > end) continue;
                 
                 end = start + query[i]  - 1;
             }else {
