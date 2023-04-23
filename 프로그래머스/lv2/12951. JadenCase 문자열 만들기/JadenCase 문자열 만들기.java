@@ -13,15 +13,11 @@ class Solution {
                 mode = 1;
                 capital = false;
             }else {
-                if(mode == 0) {
-                        arr[left] = Character.toLowerCase(arr[left]);
-                }else if(mode == 1) {
-                    if(!capital){
-                        arr[left] = Character.toUpperCase(arr[left]);
-                        capital = true;
-                    }else {
-                        arr[left] = Character.toLowerCase(arr[left]);
-                    }
+                if(mode == 1 && !capital) {
+                    arr[left] = Character.toUpperCase(arr[left]);
+                    capital = true;
+                }else {
+                    arr[left] = Character.toLowerCase(arr[left]);   
                 }
             }
             
