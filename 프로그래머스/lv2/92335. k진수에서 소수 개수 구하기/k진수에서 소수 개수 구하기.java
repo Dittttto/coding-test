@@ -9,20 +9,19 @@ class Solution {
         String[] arr = trans.split("0");
         int cnt = 0;
         for(String str: arr) {
-            str = str.replaceAll(" ", "");
-            if(!str.equals("") && check(str)) cnt++;
+            if(!str.replaceAll("[^0-9]", "").equals("") && check(str)) cnt++;
         }
         
         return cnt;
     }
     
     public boolean check(String str) {
-        int num = Integer.parseInt(str, 10);
-//         if(num < 2) return false;
+        long num = Long.parseLong(str);
+        if(num < 2) return false;
         
-//         for(int i = 2; i*i <= num ;i++) {
-//             if(num % i == 0) return false;
-//         }
+        for(long i = 2; i*i <= num ;i++) {
+             if(num % i == 0) return false;
+        }
         
         return true;
     }
