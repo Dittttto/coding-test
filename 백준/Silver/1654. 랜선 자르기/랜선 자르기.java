@@ -4,7 +4,6 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer srt = new StringTokenizer(reader.readLine());
         int N = Integer.parseInt(srt.nextToken());
         int M = Integer.parseInt(srt.nextToken());
@@ -36,9 +35,7 @@ public class Main {
                 right = mid -1;
             }
         }
-
-        writer.write(result + "");
-        writer.flush();
-        writer.close();
+		
+        System.out.println(result);
     }
 }
