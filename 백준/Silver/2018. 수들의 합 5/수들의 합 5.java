@@ -6,30 +6,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(reader.readLine());
-
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = i+1;
-        }
-        int left = 0;
-        int right = 0;
-        int sum = arr[left];
-        int cnt =0;
-        while(left < n){
-
+        int left = 1;
+        int right = 1;
+        int cnt = 1;
+        int sum = 1;
+        while(right != n){
             if(sum == n) {
                 cnt++;
-                sum -= arr[left];
+                sum -= left;
                 left++;
             }else if(sum < n) {
                 right++;
-                if(right >= n) {
-                    break;
-                }
-
-                sum += arr[right];
+                sum += right;
             }else {
-                sum -= arr[left];
+                sum -= left;
                 left++;
             }
         }
