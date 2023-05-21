@@ -2,6 +2,7 @@ import java.util.*;
 class Solution {
     static int x = 0;
     static int y = 0;
+    static int prv;
     static int[][] map;
     
     public int[] solution(int rows, int columns, int[][] queries) {
@@ -19,26 +20,24 @@ class Solution {
         for(int[] row: queries) {    
             int startX = row[0];
             int startY = row[1];
+            int direction = 0;
+            
             x = startX;
             y = startY;
-            int direction = 0;
-            int prv = map[x][y];
+            prv = map[x][y];
             int minValue = map[x][y];
             while(true){
                 direction = checkDirection(direction, row);
                 
                 if(direction == 3 && x == startX+1 && y == startY){
-                    x--;
-                    map[x][y] = prv;
+                    map[--x][y] = prv;
                     break;
                 }
                 
                 move(direction);
-                prv = swap(x, y, prv);
+                swap(x, y);
                 
-                if(minValue > prv) {
-                    minValue = prv;
-                }
+                if(minValue > prv) minValue = prv;
             }
 
             answer[answerIdx++] = minValue;
@@ -47,11 +46,10 @@ class Solution {
         return answer;
     }
     
-    public int swap(int i, int j, int prv) {
+    public void swap(int i, int j) {
         int tmp = map[i][j];
         map[i][j] = prv;
-        
-        return tmp;
+        prv = tmp;
     }
     
     public int checkDirection(int direction, int[] row) {
