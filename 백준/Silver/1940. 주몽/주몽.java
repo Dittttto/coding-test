@@ -12,11 +12,18 @@ public class Main {
 
         Arrays.sort(arr);
         int cnt = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = i+1; j < N ; j++) {
-                if(arr[i] +  arr[j] == M) {
-                    cnt++;
-                }else if(arr[i] + arr[j] > M) break;
+        int left = 0;
+        int right = arr.length - 1;
+
+        while(left < right) {
+            if(arr[left] + arr[right] == M) {
+                cnt++;
+                left++;
+                right--;
+            }else if(arr[left] + arr[right] > M) {
+                right--;
+            }else {
+                left++;
             }
         }
 
