@@ -4,6 +4,7 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(reader.readLine());
         Queue<Integer> q = new LinkedList<>();
         Stack<Integer> stack = new Stack<>();
@@ -38,8 +39,11 @@ public class Main {
         }
 
         for (int i = 0; i < result.size(); i++) {
-            System.out.print(result.get(i));
-            if (i != result.size() -1) System.out.println();
+            writer.write(result.get(i));
+            if (i != result.size() -1) writer.write("\n");
         }
+
+        writer.flush();
+        writer.close();
     }
 }
