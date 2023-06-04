@@ -8,7 +8,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(reader.readLine());
         int[] arr = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        insert(arr);
+        Arrays.sort(arr);
         int sum = 0;
         int dur = 0;
         for (int i : arr) {
@@ -17,17 +17,5 @@ public class Main {
 
         }
         System.out.println(sum);
-    }
-
-    public static void insert(int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            for (int j = i; j > 0 ; j--) {
-                if(arr[j-1] > arr[j]) {
-                    int tmp = arr[j];
-                    arr[j] = arr[j-1];
-                    arr[j-1] = tmp;
-                }
-            }
-        }
     }
 }
