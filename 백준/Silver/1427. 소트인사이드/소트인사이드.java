@@ -17,18 +17,17 @@ public class Main {
     }
     public static void select(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            int min = Integer.MIN_VALUE;
-            int minI = 0;
-            for (int j = i; j < arr.length; j++) {
-                if(arr[j] > min) {
-                    min = arr[j];
-                    minI = j;
+            int min = i;
+            for (int j = i+1; j < arr.length; j++) {
+                if(arr[j] > arr[min]) {
+                    min = j;
                 }
             }
-
-            int tmp = arr[i];
-            arr[i] = arr[minI];
-            arr[minI] = tmp;
+            if(arr[i] < arr[min]){
+                int tmp = arr[i];
+                arr[i] = arr[min];
+                arr[min] = tmp;
+            }
         }
     }
 }
