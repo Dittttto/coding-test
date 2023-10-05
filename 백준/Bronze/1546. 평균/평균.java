@@ -1,25 +1,15 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int[] numbers = new int[N];
-        int sum = 0;
-        int max = 0;
-
-        for (int i = 0; i < N; i++) {
-            numbers[i] = sc.nextInt();
-        }
-
-        for(int num: numbers) {
-            if(max < num) {
-                max = num;
-            }
-
-            sum += num;
-        }
-
-        System.out.println(sum * 100.0 / max / N);
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(reader.readLine());
+        int[] scores = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int maxValue = Arrays.stream(scores).max().orElse(0);
+        double average = Arrays.stream(scores).mapToDouble(score -> ((double) score / maxValue) * 100).average().orElse(0.0);
+        System.out.println(average);
     }
 }
