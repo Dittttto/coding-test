@@ -1,25 +1,31 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        long[] S = new long[N +1];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++) {
-            S[i] = S[i-1] + Integer.parseInt(st.nextToken());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        String[] input = reader.readLine().split(" ");
+        int n = Integer.parseInt(input[0]);
+        int m = Integer.parseInt(input[1]);
+
+        int[] arr = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[] sumArr = new int[n];
+        sumArr[0] = arr[0];
+
+        for (int i = 1; i < n; i++) {
+            sumArr[i] = sumArr[i-1] + arr[i];
         }
 
-        for (int k = 0; k < M; k++) {
-            st = new StringTokenizer(br.readLine());
-            int i = Integer.parseInt(st.nextToken());
-            int j = Integer.parseInt(st.nextToken());
-            System.out.println(S[j] - S[i-1]);
+        for (int i = 0; i <m; i++) {
+            String[] toFrom = reader.readLine().split(" ");
+            int from = Integer.parseInt(toFrom[0]) - 2;
+            int to = Integer.parseInt(toFrom[1]) - 1;
+
+            writer.write(sumArr[to] - (from < 0 ? 0 : sumArr[from])+"\n");
         }
+
+        writer.flush();
+        writer.close();
     }
 }
