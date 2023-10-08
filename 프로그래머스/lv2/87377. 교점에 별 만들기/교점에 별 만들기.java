@@ -1,80 +1,96 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-    private static class Point {
-        final long x,y;
-
-        public Point(long x, long y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-    
     public String[] solution(int[][] line) {
-        List<Point> list = new ArrayList<>();
-        for (int i = 0; i < line.length; i++) {
-            for (int j = i+1; j < line.length; j++) {
-                Point intersection = calcIntersection(line[i][0], line[i][1],line[i][2],line[j][0],line[j][1],line[j][2]);
-                if(intersection!=null) {
-                    list.add(intersection);
+        List<Point> points = new ArrayList<>();
+        for(int i = 0; i < line.length; i++) {
+            for(int j = i+1; j < line.length; j++) {
+                Point intersection = getIntersection(line[i], line[j]);
+                if(intersection != null) {
+                    points.add(intersection);
                 }
             }
         }
-
-        Point minPoint = getMinimumPosition(list);
-        Point maxPoint = getMaximumPosition(list);
-        int width = (int)(maxPoint.x - minPoint.x) + 1;
-        int height = (int)(maxPoint.y - minPoint.y) + 1;
-
-        String[][] map = new String[height][width];
-        for (String[] strings : map) {
-            Arrays.fill(strings, ".");
-        }
-
-        for (Point point : list) {
-            int x = (int) (point.x - minPoint.x);
-            int y = (int) (maxPoint.y - point.y);
-            map[y][x] = "*";
+        
+        Point minP = getMinPoint(points);
+        Point maxP = getMaxPoint(points);
+        
+        int sizeY = (int)(maxP.getY() - minP.getY()) + 1;
+        int sizeX = (int)(maxP.getX() - minP.getX()) + 1;
+        
+        String[][] board = new String[sizeY][sizeX];
+        for(String[] l: board) {
+            Arrays.fill(l, ".");
         }
         
-        String[] answer = new String[map.length];
-        for (int i = 0; i < map.length; i++) {
-            answer[i] = Arrays.stream(map[i]).reduce("", String::concat);
+        for(Point point: points) {
+            int x = (int)(point.getX() - minP.getX());
+            int y = (int)(maxP.getY() - point.getY());
+            
+            board[y][x] = "*";
         }
-        return answer;
+        
+        int idx =0;
+        String[] result = new String[sizeY];
+        for(String[] arr: board) {
+            StringBuilder sb = new StringBuilder();
+            for(String str: arr) {
+              sb.append(str);
+            }
+            result[idx++] = sb.toString();
+        }
+
+        return result;
     }
     
-    private Point calcIntersection(long A, long B, long E, long C, long D, long F) {
-        double x = (double) (B*F - E*D) / (A*D-B*C);
-        double y = (double) (E*C - A*F) / (A*D-B*C);
-        if(x%1 != 0 || y%1 != 0) return null;
-
-        return new Point((long)x,(long)y);
+    public class Point {
+        private final long x;
+        private final long y;
+        
+        Point(long x, long y) {
+            this.x = x;
+            this.y = y;
+        }
+        
+        public long getX() {
+            return this.x;
+        }
+        
+        public long getY() {
+            return this.y;
+        }
     }
-
-    private Point getMinimumPosition(List<Point> list) {
+    
+    public Point getIntersection(int[] f1, int[] f2) {
+        double x = (double)((long)f1[1]*f2[2] - (long)f1[2]*f2[1]) / ((long)f1[0]*f2[1] - (long)f1[1]*f2[0]);
+        double y = (double)((long)f1[2]*f2[0] - (long)f1[0]*f2[2]) / ((long)f1[0]*f2[1] - (long)f1[1]*f2[0]);
+        
+        if(x % 1 != 0 || y % 1 != 0) return null;
+        
+        return new Point((long) x, (long) y);
+    }
+    
+    public Point getMinPoint(List<Point> points) {
         long x = Long.MAX_VALUE;
         long y = Long.MAX_VALUE;
-
-        for (Point p: list) {
-            if(x > p.x) x = p.x;
-            if(y > p.y) y = p.y;
+        
+        for(Point point: points) {
+            if(x > point.getX()) x = point.getX();
+            if(y > point.getY()) y = point.getY();
         }
-
-        return new Point(x,y);
+        
+        return new Point(x, y);
     }
-
-    private Point getMaximumPosition(List<Point> list) {
+    
+    public Point getMaxPoint(List<Point> points) {
         long x = Long.MIN_VALUE;
         long y = Long.MIN_VALUE;
-
-        for (Point p: list) {
-            if(x < p.x) x = p.x;
-            if(y < p.y) y = p.y;
+        
+        for(Point point: points) {
+            if(x < point.getX()) x = point.getX();
+            if(y < point.getY()) y = point.getY();
         }
-
-        return new Point(x,y);
+        
+        return new Point(x, y);
     }
 }
