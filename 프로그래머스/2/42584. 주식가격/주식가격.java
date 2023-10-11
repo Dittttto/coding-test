@@ -1,24 +1,16 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] prices) {
-        Deque<Integer> stack = new LinkedList<>();
+        int[] answer = new int[prices.length];
         int idx = prices.length - 1;
-        int[] answer = new int[idx + 1];
         List<Integer> right = new ArrayList<>();
-        right.add(prices[idx]);
-        
-        for(int i = prices.length -2; i > -1; i--) {
-            int cnt = 0;
+        for(int i = prices.length -1; i > -1; i--) {
             for(int j = right.size() - 1; j > -1;j--) {
-                int tmp = right.get(j);
-                cnt ++;
-                
-                if(prices[i] > tmp) {
+                answer[i] += 1;
+                if(prices[i] > right.get(j)) {
                     break;
                 }
             }
-            
-            answer[i] = cnt;
             right.add(prices[i]);
         }
         
