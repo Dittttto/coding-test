@@ -3,8 +3,6 @@ class Solution {
     public int[] solution(int[] prices) {
         Deque<Integer> stack = new LinkedList<>();
         int idx = prices.length - 1;
-        int minValue = prices[idx];
-        int minIdx = idx;
         int[] answer = new int[idx + 1];
         List<Integer> right = new ArrayList<>();
         right.add(prices[idx]);
