@@ -29,7 +29,6 @@ class Solution {
                 idx += 1;
             }
             
-            
             time += 1;
         }
         
