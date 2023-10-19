@@ -1,49 +1,43 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        int N = Integer.parseInt(reader.readLine());
-        Queue<Integer> q = new LinkedList<>();
-        Stack<Integer> stack = new Stack<>();
-        ArrayList<String> result = new ArrayList<>();
-        for (int i = 0; i < N; i++) {
-            q.offer(Integer.parseInt(reader.readLine()));
+        int n = Integer.parseInt(reader.readLine());
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = Integer.parseInt(reader.readLine());
         }
 
-        int num = q.poll();
+        Deque<Integer> stack = new LinkedList<>();
+        StringBuilder sb = new StringBuilder();
 
-        for (int i = 1; i <= N; i++) {
+        int idx = 0;
+        int outIdx = 1;
+        while (idx < n) {
+            if (!stack.isEmpty() && stack.peekLast() == nums[idx]) {
+                while(!stack.isEmpty() && stack.peekLast() == nums[idx]) {
+                    sb.append("-\n");
+                    stack.pollLast();
+                    idx += 1;
+                }
 
-            if(!stack.isEmpty() && stack.peek() > i) {
-                break;
+            }else if (!stack.isEmpty() && stack.peekLast() > nums[idx]) {
+                System.out.println("NO");
+                return;
             }
 
-            stack.push(i);
-            result.add("+");
-
-            while(!stack.isEmpty() && stack.peek() == num) {
-                stack.pop();
-                result.add("-");
-
-                if(q.isEmpty()) break;
-                num = q.poll();
+            if (outIdx <= n) {
+                sb.append("+\n");
+                stack.offerLast(outIdx++);
             }
         }
 
-        if(!stack.isEmpty()) {
-            System.out.println("NO");
-            return;
-        }
-
-        for (int i = 0; i < result.size(); i++) {
-            writer.write(result.get(i));
-            if (i != result.size() -1) writer.write("\n");
-        }
-
-        writer.flush();
-        writer.close();
+        System.out.print(sb.substring(0, sb.length() - 1));
     }
 }
