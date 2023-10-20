@@ -33,9 +33,9 @@ public class Main {
         }
 
         for (int i = 0; i < n; i++) {
-            if (result) break;
             visited = new boolean[n];
             dfs(1, i, i + "");
+            if (result) break;
         }
         System.out.println(result ? 1 : 0);
         writer.flush();
