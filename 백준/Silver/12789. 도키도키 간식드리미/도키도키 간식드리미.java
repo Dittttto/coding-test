@@ -17,14 +17,29 @@ public class Main {
         int idx = 0;
         int now = 1;
         while (now <= n) {
-            if (!wait.isEmpty() && wait.peekLast() < arr[idx]){
-                break;
+            if (idx < n && arr[idx] == now) {
+                idx += 1;
+                now += 1;
+                continue;
             }
-            wait.offerLast(arr[idx++]);
 
             while (!wait.isEmpty() && wait.peekLast() == now) {
                 wait.pollLast();
                 now += 1;
+            }
+
+            if (idx >= n) {
+                break;
+            }
+            if (wait.isEmpty()) {
+                wait.offerLast(arr[idx]);
+                idx += 1;
+            } else {
+                if (wait.peekLast() < arr[idx]) {
+                    break;
+                }
+                wait.offerLast(arr[idx]);
+                idx += 1;
             }
         }
         if (wait.size() == 0) {
