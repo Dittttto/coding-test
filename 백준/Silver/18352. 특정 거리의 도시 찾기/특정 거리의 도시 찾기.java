@@ -11,10 +11,8 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-        public static List<List<Integer>> map;
-        public static boolean[] visited;
+        public static ArrayList<Integer>[] map;
         public static int[] dist;
-
         public static void main(String[] args) throws IOException {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -23,11 +21,11 @@ public class Main {
                 int m = Integer.parseInt(srt.nextToken());
                 int k = Integer.parseInt(srt.nextToken());
                 int x = Integer.parseInt(srt.nextToken());
-                map = new ArrayList<>();
-                visited = new boolean[n+1];
+                map = new ArrayList[n+1];
                 dist = new int[n+1];
+                Arrays.fill(dist, -1);
                 for (int i = 0; i <= n; i++) {
-                        map.add(new ArrayList<>());
+                        map[i] = new ArrayList<>();
                 }
 
                 for (int i = 0; i < m; i++) {
@@ -35,7 +33,7 @@ public class Main {
                         int from = Integer.parseInt(srt.nextToken());
                         int to = Integer.parseInt(srt.nextToken());
 
-                        map.get(from).add(to);
+                        map[from].add(to);
                 }
 
                 bfs(x);
@@ -59,20 +57,15 @@ public class Main {
         public static void bfs(int v) {
                 Queue<Integer> q = new LinkedList<>();
                 q.offer(v);
-                visited[v] = true;
+                dist[v] = 0;
 
                 while(!q.isEmpty()) {
-                        int size = q.size();
 
-                        for (int i = 0; i < size; i++) {
-                                int cur = q.poll();
-
-                                for (Integer next : map.get(cur)) {
-                                        if (!visited[next]) {
-                                                visited[next] = true;
-                                                dist[next] = dist[cur] + 1;
-                                                q.add(next);
-                                        }
+                        int cur = q.poll();
+                        for (Integer next : map[cur]) {
+                                if (dist[next] == -1) {
+                                        dist[next] = dist[cur] + 1;
+                                        q.add(next);
                                 }
                         }
                 }
