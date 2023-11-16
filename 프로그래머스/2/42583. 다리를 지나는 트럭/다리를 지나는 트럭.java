@@ -1,32 +1,28 @@
 import java.util.*;
+
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        
-        int curW = 0;
-        int curL = 0;
-        int time = 0;
-        int[] wait = new int[truck_weights.length];
+        Queue<Truck> q = new LinkedList<>();
+        List<Truck> trucks = new ArrayList<>();
+        int size = truck_weights.length;
         int idx = 0;
-        int outIdx = 0;
-        
-        while(outIdx < truck_weights.length) {
-            for(int i = outIdx; i < idx; i++) {
-                if(time - wait[i] >= bridge_length) {
-                    wait[outIdx] = time;
-                    curW -= truck_weights[outIdx];
-                    curL -= 1;                    
-                    outIdx += 1;
+        int time =0;
+        int bCurW = 0;
+        while(trucks.size() < size) {
+            if(!q.isEmpty()) {
+                if(q.peek().isOverTime(time, bridge_length)){
+                    Truck truck = q.poll();
+                    bCurW -= truck.weight;
+                    trucks.add(truck);
                 }
             }
             
-            if(idx < truck_weights.length && 
-               curW + truck_weights[idx] <= weight && 
-               curL + 1 <= bridge_length) {
-                
-                wait[idx] = time;
-                curW += truck_weights[idx];
-                curL += 1;
-                idx += 1;
+            if(bCurW + truck_weights[idx] <= weight && q.size() +1 <= bridge_length) {
+                q.offer(new Truck(truck_weights[idx], time));
+                bCurW += truck_weights[idx];
+                if(idx + 1 < size){
+                    idx += 1;                    
+                }
             }
             
             time += 1;
@@ -34,5 +30,24 @@ class Solution {
         
         
         return time;
+    }
+    
+    class Truck {
+        public int weight;
+        public int inTime;
+        
+        public Truck(int weight, int inTime) {
+            this.weight = weight;
+            this.inTime = inTime;
+        }
+        
+        public boolean isOverTime(int time, int limit) {
+            return time - inTime == limit;
+        }
+        
+        @Override
+        public String toString() {
+            return weight + "";
+        }
     }
 }
