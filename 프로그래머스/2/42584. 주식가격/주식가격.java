@@ -1,19 +1,30 @@
 import java.util.*;
+
 class Solution {
     public int[] solution(int[] prices) {
-        int[] answer = new int[prices.length];
-        int idx = prices.length - 1;
+        
+        Deque<Integer> left = new LinkedList<>();
         List<Integer> right = new ArrayList<>();
-        for(int i = prices.length -1; i > -1; i--) {
-            for(int j = right.size() - 1; j > -1;j--) {
-                answer[i] += 1;
-                if(prices[i] > right.get(j)) {
-                    break;
-                }
-            }
-            right.add(prices[i]);
+        int[] answer = new int[prices.length];
+        
+        for(int i: prices) {
+            left.offerLast(i);
         }
         
+        int idx = prices.length - 1;
+        while(idx >= 0) {
+            int cur = left.pollLast();
+            int count = 0;
+            for(int i = right.size() - 1; i> -1; i--) {
+                count += 1;
+                if(cur > right.get(i)) {
+                    break;
+                }                
+            }
+            answer[idx] = count;
+            right.add(cur);
+            idx -= 1;
+        }
         return answer;
     }
 }
