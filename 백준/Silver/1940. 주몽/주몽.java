@@ -4,29 +4,30 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(reader.readLine());
-        int M = Integer.parseInt(reader.readLine());
-        int[] arr = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        public static void main(String[] args) throws IOException {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                int n = Integer.parseInt(reader.readLine());
+                int m = Integer.parseInt(reader.readLine());
+                int[] nums = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+                Arrays.sort(nums);
 
-        Arrays.sort(arr);
-        int cnt = 0;
-        int left = 0;
-        int right = arr.length - 1;
+                int i = 0;
+                int j = n - 1;
+                int result = 0;
 
-        while(left < right) {
-            if(arr[left] + arr[right] == M) {
-                cnt++;
-                left++;
-                right--;
-            }else if(arr[left] + arr[right] > M) {
-                right--;
-            }else {
-                left++;
-            }
+                while (j > i) {
+                        if (nums[j] + nums[i] < m) {
+                                i += 1;
+                        }else if(nums[j] + nums[i] > m) {
+                                j -= 1;
+                        }else {
+                                result += 1;
+                                j -= 1;
+                                i += 1;
+                        }
+                }
+
+                System.out.println(result);
+
         }
-
-        System.out.println(cnt);
-    }
 }
