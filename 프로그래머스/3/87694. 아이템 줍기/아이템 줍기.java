@@ -45,27 +45,23 @@ class Solution {
         visited[cx][cy] = 1;
         
         while(!q.isEmpty()) {
-            int size = q.size();
-            for(int i = 0; i< size; i++) {
-                int[] cur = q.poll();
-                int curX = cur[0];
-                int curY = cur[1];
-                if(curX == ix && curY == iy) {
-                    return;
-                }
-                
-                for(int j = 0; j < 4; j++) {
-                    int nextX = curX + dx[j];
-                    int nextY = curY + dy[j];
-                    
-                    if(nextX < 0 || nextX > height) continue;
-                    if(nextY < 0 || nextY > width) continue;
-                    if(map[nextX][nextY] != 1) continue;
-                    if(visited[nextX][nextY] != 0) continue;
-                    visited[nextX][nextY] += visited[curX][curY] + 1;
-                    q.add(new int[]{nextX, nextY});
-                }
+            int[] cur = q.poll();
+            int curX = cur[0];
+            int curY = cur[1];
+            if(curX == ix && curY == iy) {
+                return;
+            }
 
+            for(int j = 0; j < 4; j++) {
+                int nextX = curX + dx[j];
+                int nextY = curY + dy[j];
+
+                if(nextX < 0 || nextX > height) continue;
+                if(nextY < 0 || nextY > width) continue;
+                if(map[nextX][nextY] != 1) continue;
+                if(visited[nextX][nextY] != 0) continue;
+                visited[nextX][nextY] += visited[curX][curY] + 1;
+                q.add(new int[]{nextX, nextY});
             }
         }
     }
