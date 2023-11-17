@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class Main {
@@ -36,12 +35,11 @@ public class Main {
                         map[to].add(from);
                 }
 
-                for(int i = 1; i <=n; i++) {
-                        map[i].sort(Comparator.reverseOrder());
+                for (ArrayList<Integer> integers : map) {
+                        integers.sort(Comparator.reverseOrder());
                 }
 
                 dfs(v);
-
                 for (int i = 1; i <= n; i++) {
                         writer.write(from[i] + "\n");
                 }
