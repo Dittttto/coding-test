@@ -1,28 +1,17 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(reader.readLine());
-        HashMap<Integer, Integer> hm = new HashMap<>();
-        String[] arr = reader.readLine().split(" ");
-        int find = Integer.parseInt(reader.readLine());
 
-        for(String num: arr) {
-            int key = Integer.parseInt(num);
-            if(hm.containsKey(key)) {
-                hm.replace(key,hm.get(key)+1);
-            }else {
-                hm.put(key, 1);
-            }
+        public static void main(String[] args) throws IOException {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                int n = Integer.parseInt(reader.readLine());
+                Stream<String> nums = Arrays.stream(reader.readLine().split(" "));
+                String v = reader.readLine();
+                long count = nums.filter(num -> num.equals(v)).count();
+                System.out.println(count);
         }
-
-        if(!hm.containsKey(find)) {
-            System.out.println(0);
-            return;
-        }
-
-        System.out.println(hm.get(find));
-    }
 }
