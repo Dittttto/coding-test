@@ -1,6 +1,8 @@
 import java.util.*;
 
 class Solution {
+    private static final String ENTER_MESSAGE = "%s님이 들어왔습니다.";
+    private static final String LEAVE_MESSAGE = "%s님이 나갔습니다.";
     public String[] solution(String[] record) {
         Map<String, String> name = new HashMap<>();
         List<String[]> message = new ArrayList<>();
@@ -22,15 +24,8 @@ class Solution {
     }
     
     public static String[] getMessage(List<String[]> message, Map<String, String> name) {
-        List<String> result = new ArrayList<>();
-        for(String[] row: message) {
-            if(row[0].equals("Enter")) {
-                result.add(name.get(row[1]) + "님이 들어왔습니다.");
-            }else {
-                result.add(name.get(row[1]) + "님이 나갔습니다.");
-            }
-        }
-        
-        return result.toArray(new String[0]);
+        return message.stream()
+            .map(str -> String.format(str[0].equals("Enter") ? ENTER_MESSAGE : LEAVE_MESSAGE, name.get(str[1])))
+            .toArray(array -> new String[message.size()]);
     }
 }
