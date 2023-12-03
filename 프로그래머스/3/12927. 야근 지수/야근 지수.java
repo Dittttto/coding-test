@@ -9,10 +9,7 @@ class Solution {
             works[max] -= 1;
             for(int i = max; i > 0; i--) {
                 if(works[i-1] < works[i]) break;
-                
-                int tmp = works[i];
-                works[i] = works[i-1];
-                works[i-1] = tmp;
+                swap(i, works);
             }
         }
         
@@ -21,5 +18,11 @@ class Solution {
             answer += (work * work);
         } 
         return answer;
+    }
+    
+    private void swap(int i, int[] works) {
+        int tmp = works[i];
+        works[i] = works[i-1];
+        works[i-1] = tmp;
     }
 }
