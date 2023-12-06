@@ -25,9 +25,8 @@ public class Main {
                 }
 
 
-                Map<String, Integer> shortW = A.length() > B.length() ? wordB : wordA;
                 int cnt = 0;
-                for (String s : shortW.keySet()) {
+                for (String s : wordA.keySet()) {
 
                        int numA = wordA.getOrDefault(s, 0);
                        int numB = wordB.getOrDefault(s, 0);
