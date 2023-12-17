@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 )
 
@@ -8,18 +9,18 @@ func main() {
 	var x int
 
 	fmt.Scanf("%d", &x)
-	var output string
+	var output bytes.Buffer
 
 	for i := 0; i < x; i++ {
 		for j := 0; j < x-i-1; j++ {
-			output += " "
+			output.WriteString(" ")
 		}
 
 		for j := 0; j <= i; j++ {
-			output += "*"
+			output.WriteString("*")
 		}
-		output += "\n"
+		output.WriteString("\n")
 	}
 
-	fmt.Print(output)
+	fmt.Print(output.String())
 }
