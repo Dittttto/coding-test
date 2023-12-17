@@ -8,15 +8,18 @@ func main() {
 	var x int
 
 	fmt.Scanf("%d", &x)
+	var output string
 
 	for i := 0; i < x; i++ {
 		for j := 0; j < x-i-1; j++ {
-			fmt.Print(" ")
+			output += " "
 		}
 
 		for j := 0; j <= i; j++ {
-			fmt.Print("*")
+			output += "*"
 		}
-		fmt.Println()
+		output += "\n"
 	}
+
+	fmt.Print(output)
 }
