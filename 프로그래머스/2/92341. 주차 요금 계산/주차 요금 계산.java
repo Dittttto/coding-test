@@ -2,11 +2,10 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] fees, String[] records) {
-        
-        List<String> numbers = new ArrayList<>();
-        Map<String, Long> currTime = new HashMap<>();
+        Map<String, Long> cumulativeTime = new HashMap<>();
         Map<String, Long> parkTime = new HashMap<>();
         Map<String, String> state = new HashMap<>();
+        
         for(String record: records) {
             String[] recordArr = record.split(" ");
             Long time = convertTime(recordArr[0]);
@@ -14,15 +13,15 @@ class Solution {
             String parkState = recordArr[2];
             state.put(number, parkState);
             
-            if(!numbers.contains(number)){
-                numbers.add(number);
-            }
+//             if(!numbers.contains(number)){
+//                 numbers.add(number);
+//             }
             
             if(parkState.equals("IN")) {
                 parkTime.put(number, time);
             }else {
                 Long subtract = time - parkTime.get(number);
-                currTime.put(number, currTime.getOrDefault(number, 0L) + subtract);
+                cumulativeTime.put(number, cumulativeTime.getOrDefault(number, 0L) + subtract);
                 parkTime.put(number, 0L);
             }
         }
@@ -33,15 +32,16 @@ class Solution {
             
             if(stateStr.equals("IN")) {
                 Long subtract = (23 * 60 + 59L) - parkTime.get(number);
-                currTime.put(number, currTime.getOrDefault(number, 0L) + subtract);
+                cumulativeTime.put(number, cumulativeTime.getOrDefault(number, 0L) + subtract);
             }
         }
         
+        List<String> numbers = new ArrayList<>(cumulativeTime.keySet());
         Collections.sort(numbers);
         int[] answer = new int[numbers.size()];
         for(int i = 0; i < numbers.size(); i++) {
             String number = numbers.get(i);
-            Long parkingTime = currTime.get(number);
+            Long parkingTime = cumulativeTime.get(number);
             answer[i] = (int)calculateFee(fees, parkingTime);
         }
         
@@ -54,15 +54,12 @@ class Solution {
         }
         
         double overTime = (parkingTime - fees[0]) / (double)fees[2];
-        System.out.println(overTime);
+        
         if(overTime % 1 != 0.0) {
             overTime = (long)overTime / 1 + 1;
         }else {
-            overTime = overTime / 1;
+            overTime = (long)overTime / 1;
         }
-        
-        System.out.println(overTime);
-        
         return (long)(fees[1] + (double)(overTime * (double)fees[3]));
     }
     
