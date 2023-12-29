@@ -1,0 +1,2 @@
+SELECT o.ANIMAL_ID, o.name
+from ANIMAL_OUTS o left join ANIMAL_INS i on o.ANIMAL_ID = i.ANIMAL_ID where i.ANIMAL_ID is null;
