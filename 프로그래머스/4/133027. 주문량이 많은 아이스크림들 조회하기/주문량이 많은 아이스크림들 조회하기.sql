@@ -10,3 +10,13 @@ from (
 order by TOTAL_ORDER desc
 limit 3;
 
+select FLAVOR
+from
+((select * 
+from FIRST_HALF h)
+union
+(select *
+from july j)) o
+group by FLAVOR
+order by sum(TOTAL_ORDER) desc
+limit 3;
