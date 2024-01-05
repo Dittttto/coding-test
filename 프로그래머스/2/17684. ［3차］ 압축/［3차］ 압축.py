@@ -1,22 +1,18 @@
 def solution(msg):
     answer = []
-    alphabet = [chr(i) for i in range(65, 91)]
-    
-    idx = 0
-    
-    while idx < len(msg):
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    d = {k:v for (k,v) in zip(alphabet,  range(1, 27))}
+    while True:
+        if msg in d:
+            answer.append(d[msg])
+            break;
         
-        char = ""
-        for i in range(idx, len(msg)):            
-            if char + msg[i] not in alphabet:
-                idx = i
-                alphabet.append(char + msg[i])
-                answer.append(alphabet.index(char)+1)
+        for i in range(1, len(msg)+1):
+            if msg[0:i] not in d:
+                answer.append(d[msg[0:i-1]])
+                d[msg[0:i]] = len(d)+1
+                msg = msg[i-1:]
                 break
-                
-            char += msg[i]
-            if i == len(msg) - 1 :
-                answer.append(alphabet.index(char)+1)
-                idx = i+1
-    
+        
+
     return answer
