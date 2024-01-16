@@ -7,6 +7,10 @@ visited = []
 
 def dfs(v, nodes):
     global visited
+
+    if visited[v]:
+        return
+
     visited[v] = True
 
     for node in nodes[v]:
