@@ -3,46 +3,43 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.*;
 
 public class Main {
-    static BufferedWriter writer;
-    static int length;
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        length = Integer.parseInt(reader.readLine());
-        StringBuilder sb = new StringBuilder();
-        dfs(sb);
-        writer.flush();
-        writer.close();
-    }
-
-    public static void dfs(StringBuilder sb) throws IOException {
-        if (length == sb.length()) {
-            writer.write(sb + "\n");
-            return;
+        static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        static BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        public static void main(String[] args) throws IOException {
+                int n = Integer.parseInt(reader.readLine());
+                for (int i = 2; i < 10; i++) {
+                        if(checkPrimeNumber(i)) {
+                                dfs(i, 1, n);
+                        }
+                }
+                writer.flush();
+                writer.close();
         }
 
-        for (int i = 1; i <= 9; i++) {
-            if (sb.length() == 0 && i == 1) {
-                continue;
-            }
-            if (check(sb.toString() + i)) {
-                dfs(sb.append(i));
-                sb.delete(sb.length() - 1, sb.length());
-            }
-        }
-    }
+        private static void dfs(int c, int length, int limit) throws IOException {
+                if (length == limit) {
+                        writer.write(c+"\n");
+                        return;
+                }
 
-    public static boolean check(String s) {
-        int num = Integer.parseInt(s);
-        for (int i = 2; i <= num / 2; i++) {
-            if (num % i == 0) {
-                return false;
-            }
+                for (int i = 1; i< 10;i++) {
+                        int number = c * 10 + i;
+                        if(checkPrimeNumber(number)) {
+                                dfs(number, length+1, limit);
+                        }
+                }
         }
 
-        return true;
-    }
+        private static boolean checkPrimeNumber(int num) {
+                for(int i = 2; i <= num / 2; i++) {
+                        if(num % i == 0) {
+                                return false;
+                        }
+                }
+
+                return true;
+        }
 }
