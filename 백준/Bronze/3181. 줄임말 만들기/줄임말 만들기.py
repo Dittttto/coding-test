@@ -8,12 +8,11 @@ def main():
     words = input().split()
     result = ""
     for i in range(len(words)):
-        word = words[i]
-
-        if i != 0 and word in ban_words:
+        if i != 0 and words[i] in ban_words:
             continue
 
-        result += word[0].upper()
+        result += words[i][0].upper()
     print(result)
+
 
 main()
