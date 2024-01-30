@@ -5,20 +5,21 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(reader.readLine());
+        int n = Integer.parseInt(reader.readLine());
 
         int depth = 1;
-        int result = 0;
+        long result = 0L;
+
         while(true) {
-            long num = (long)Math.pow(10, depth) - 1;
-            if(num <= N) {
-                result += 9 * Math.pow(10, depth-1)*depth;
+            long lasNumOfDepth = (long) Math.pow(10, depth) - 1;
+            if (lasNumOfDepth <= n) {
+                result += 9 * (long)Math.pow(10, depth - 1) * depth;
             }else {
-                result += (N - (long)(Math.pow(10, depth-1)-1))*depth;
+                result += (n - (long)(Math.pow(10, depth - 1) - 1)) * depth;
                 break;
             }
 
-            depth++;
+            depth += 1;
         }
 
         System.out.println(result);
