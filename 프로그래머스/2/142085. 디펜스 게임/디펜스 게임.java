@@ -3,31 +3,24 @@ import java.util.*;
 class Solution {
     public int solution(int n, int k, int[] enemy) {
         if(k >= enemy.length){
-            return enemy.length;
+            return enemy.length; // 무적권이 전체 스테이지의 수와 동일하지 않다는 것을 명심해야 한다.
         }
         
         PriorityQueue<Integer> queue = new PriorityQueue<Integer>(Collections.reverseOrder());
         
-        int remain = n;
         for(int i =0; i< enemy.length; i++) {
             int cur = enemy[i];
-            if(remain >= cur) {
-                remain -= cur;
-                queue.add(cur);
-            }else {
-                if(k > 0) {
-                    if(!queue.isEmpty()){
-                        if(queue.peek() > cur) {
-                            int before = queue.poll();
-                            remain += (before - cur);
-                            queue.add(cur);
-                        }
-                    }
-                    
-                    k-=1;
-                } else {
+            
+            n -= enemy[i];
+            queue.offer(cur);
+ 
+            if(n < 0) {
+                if(k == 0) {
                     return i;
                 }
+                
+                n += queue.poll();
+                k -=1;
             }
         }
         
