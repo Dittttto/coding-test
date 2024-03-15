@@ -2,46 +2,27 @@ import java.util.*;
 import java.util.stream.*;
 class Solution {
     public int[] solution(int N, int[] stages) {
-        int[] clear = new int[N+1];
-        int[] pause = new int[N+1];
+        int[] challenger = new int[N+2];
+        for(int i = 0 ;i < stages.length; i++) {
+            challenger[stages[i]] += 1;
+        }
         
-        for(int stage: stages) {
-            for(int i = 1; i < stage; i++){
-                clear[i] += 1;
-            }
-            
-            if(stage <= N) {
-                pause[stage] += 1;                
+        double total = stages.length;
+        Map<Integer, Double> failure = new HashMap<>();
+        for (int i = 1; i<= N; i++){
+            if(challenger[i] == 0){
+                failure.put(i, 0.0);                
+            }else {
+                failure.put(i, challenger[i] / total);
+                total -= challenger[i];
             }
         }
         
-        double[] percentage = new double[N];
-        for(int i = 1; i< clear.length;i++) {
-            if(clear[i] == 0 && pause[i] == 0){
-                percentage[i-1] = 0;
-            } else {
-                percentage[i-1] = (double)pause[i] / (clear[i] + pause[i]);
-            }
-        }
-        
-        boolean[] visited= new boolean[N+1];
-        int cnt =0;
-        int[] answer = new int[N];
-        
-        while(cnt < N) {
-            double max = -1.0;
-            int idx = -1;
-            for(int i = 1; i< N+1;i++ ) {
-                if(percentage[i-1]  > max && !visited[i]) {
-                    max = percentage[i-1];
-                    idx = i;
-                }
-            }
-            
-            visited[idx] = true;
-            answer[cnt] = idx;
-            cnt++;
-        }
-        return answer;
+        failure.remove(N+1);
+        List<Integer> keys = new ArrayList<>(failure.keySet());
+        keys.sort((o1, o2) ->{
+            return  failure.get(o2).compareTo(failure.get(o1));
+        });
+        return keys.stream().mapToInt(Integer::intValue).toArray();
     }
 }
