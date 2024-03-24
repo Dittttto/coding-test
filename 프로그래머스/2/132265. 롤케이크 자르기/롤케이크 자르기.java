@@ -1,34 +1,36 @@
 import java.util.*;
 class Solution {
     public int solution(int[] topping) {
-        int[] memo = new int[10001];
-        int kind = 0;
-        for(int top: topping) {
-            if(memo[top] == 0) {
-                kind += 1;
-            }
-            memo[top] += 1;
-        }
-        
+        int[] right = new int[10001];
         int[] left =  new int[10001];
+        int kindRight = 0;
         int kindLeft = 0;
         int result = 0;
+        
+        for(int t: topping) {
+            if(right[t] == 0) {
+                kindRight += 1;
+            }
+            
+            right[t] += 1;
+        }
+        
         for(int i = 0; i < topping.length; i++) {
-            int top = topping[i];
-            if(left[top] == 0) {
+            int t = topping[i];
+            if(left[t] == 0) {
                 kindLeft += 1;
             }
                 
-            left[top] += 1;
-            memo[top] -= 1;
+            left[t] += 1;
+            right[t] -= 1;
             
-            if(memo[top] == 0) {
-                kind -= 1;
+            if(right[t] == 0) {
+                kindRight -= 1;
             }
             
-            if(kindLeft == kind) {
+            if(kindLeft == kindRight) {
                 result += 1;
-            }else if(kindLeft > kind) {
+            }else if(kindLeft > kindRight) {
                 break;
             }
         }
