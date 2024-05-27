@@ -1,26 +1,29 @@
 import java.util.*;
+
 class Solution {
     boolean solution(String s) {
-        boolean answer = false;
-        int count = 0;
+        Deque<Character> left = new LinkedList<>();
         
-        for(char c: s.toCharArray()) {
-            if(c == '('){
-                count++;
-            }
-            
-            if(c == ')'){
-                count--;
-            }
-            
-            if(count < 0) {
-                return false;
+        for(char c : s.toCharArray()) {
+            if(left.isEmpty()) {
+                if(c == ')'){
+                    return false;
+                }
+                
+                left.offerLast(c);
+            }else {
+                if(c == ')') {
+                    left.pollLast();
+                }else {
+                    left.offerLast(c);
+                }
             }
         }
         
-        if(count == 0) {
+        if(left.size() == 0){
             return true;
         }
-        return answer;
+        
+        return false;
     }
 }
