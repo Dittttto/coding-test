@@ -5,19 +5,16 @@ class Solution {
         Deque<Character> left = new LinkedList<>();
         
         for(char c : s.toCharArray()) {
-            if(left.isEmpty()) {
-                if(c == ')'){
+            if(c == ')') {
+                if(left.isEmpty()) {
                     return false;
                 }
                 
-                left.offerLast(c);
-            }else {
-                if(c == ')') {
-                    left.pollLast();
-                }else {
-                    left.offerLast(c);
-                }
+                left.pollLast();
+                continue;
             }
+            
+            left.offerLast(c);                
         }
         
         if(left.size() == 0){
