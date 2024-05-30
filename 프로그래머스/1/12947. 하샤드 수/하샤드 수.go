@@ -7,9 +7,5 @@ func solution(x int) bool {
         x /= 10
     }
     
-    if origin % sum == 0 {
-        return true
-    }
-    
-    return false
+    return origin % sum == 0
 }
