@@ -1,12 +1,11 @@
 func solution(s string) string {
-    length := len(s)
-    if length == 1 {
-        return s
+    mid := len(s) / 2
+    length := 1
+
+    if len(s) % 2 == 0 {
+        mid--
+        length++
     }
-    mid := length/2
-    if length % 2 == 0 {
-        return s[mid-1 : mid+1]
-    }else {
-        return s[mid: mid+1]
-    } 
+    
+    return s[mid:mid+length]
 }
