@@ -3,24 +3,10 @@ func solution(s string) string {
     if length == 1 {
         return s
     }
-    
-    answer := ""
+    mid := length/2
     if length % 2 == 0 {
-        for i, v := range s {
-            if i == length /2 -1  {
-                answer += string(v)
-            }
-            if i == length / 2{
-                answer += string(v)
-                break
-            }
-        }
+        return s[mid-1 : mid+1]
     }else {
-        for i, v := range s {
-            if i == length / 2 {
-                answer = string(v)
-            }
-        }
+        return s[mid: mid+1]
     } 
-    return answer
 }
