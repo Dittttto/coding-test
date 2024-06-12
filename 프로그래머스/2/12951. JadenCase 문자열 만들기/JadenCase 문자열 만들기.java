@@ -1,29 +1,38 @@
-import java.util.*;
-
 class Solution {
     public String solution(String s) {
-        char[] arr = s.toCharArray();
-        int mode = 1;
-        int left = 0;
-        boolean capital = false;
-        while(left < arr.length) {
-            if(arr[left] - '0' >=0 && arr[left] - '0' <= 9) {
-                mode = 0;
-            }else if(arr[left] == ' ') {
-                mode = 1;
-                capital = false;
-            }else {
-                if(mode == 1 && !capital) {
-                    arr[left] = Character.toUpperCase(arr[left]);
-                    capital = true;
-                }else {
-                    arr[left] = Character.toLowerCase(arr[left]);   
+        StringBuilder sb = new StringBuilder();
+        s = s.replace(" ", "+");
+        StringBuilder temp = new StringBuilder();
+        for(char c: s.toCharArray()) {
+            if(c == '+') {
+                if(temp.length() != 0) {
+                    String tmp = temp.toString();
+                    if(Character.isDigit(tmp.charAt(0))) {
+                        sb.append(tmp.charAt(0) + tmp.substring(1).toLowerCase());
+                    }else {
+                        sb.append(Character.toUpperCase(tmp.charAt(0)) + tmp.substring(1).toLowerCase());
+                    }
+                       
+                    temp = new StringBuilder();
                 }
+                
+                sb.append(" ");
+            }else {
+                temp.append(c);
             }
-            
-            left++;
         }
         
-        return new String(arr);
+      if(temp.length() != 0) {
+                String tmp = temp.toString();
+                if(Character.isDigit(tmp.charAt(0))) {
+                    sb.append(tmp.charAt(0) + tmp.substring(1).toLowerCase());
+                }else {
+                    sb.append(Character.toUpperCase(tmp.charAt(0)) + tmp.substring(1).toLowerCase());
+                }
+
+                temp = new StringBuilder();
+            }
+        
+        return sb.toString();
     }
 }
